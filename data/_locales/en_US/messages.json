@@ -37,8 +37,16 @@
     "message": "Save whole page as MHTML",
     "description": "Title of save page button"
   },
+  "saveAsHtmlTitle": {
+    "message": "Save whole page as HTML",
+    "description": "Title of save page button"
+  },
   "saveAsMhtmlLabel": {
     "message": "Save Whole Page",
+    "description": "Title of label."
+  },
+  "saveAsHtmlLabel": {
+    "message": "Save Page as HTML",
     "description": "Title of label."
   },
   "saveSelectionAsHtmlTitle": {

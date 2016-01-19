@@ -42,6 +42,7 @@
     });
 
     $("#saveAsMhtml").on('click', saveAsMHTML);
+    $("#saveAsHtml").on('click', saveAsHTML);
     $("#saveAsBookmark").on('click', saveAsBookmark);
 	
     $("#saveSelectionAsHtml").on("click", function() {
@@ -61,20 +62,55 @@
         chrome.tabs.getSelected(null, function(tab) {
           //console.log("HTML: " + request.source);
           var cleanenHTML = prepareContent(request.source);
-          var htmlBlob = new Blob([cleanenHTML], {
-            type: "text/html;charset=utf-8"
-          });
-          tags = document.getElementById("tags").value;
-          title = document.getElementById("title").value;
-          if (tags) {
-            tags = tags.split(",").join(" ");
-            saveAs(htmlBlob, title + ' [' + tags + '].html');
-          } else {
-            saveAs(htmlBlob, title + '.html');
-          }
+          saveHtmlContent(cleanenHTML);
+        });
+      }
+
+      if (request.action == "getPage") {
+        chrome.tabs.getSelected(null, function(tab) {
+          var cleanenHTML = purifyContent(request.source);
+          //chrome.extension.getBackgroundPage().console.log("cleanenHTML: " + cleanenHTML);
+          saveHtmlContent(cleanenHTML);
         });
       }
     });
+
+    function saveHtmlContent(content) {
+      var htmlBlob = new Blob([content], {
+        type: "text/html;charset=utf-8"
+      });
+      tags = document.getElementById("tags").value;
+      title = document.getElementById("title").value;
+      if (tags) {
+        tags = tags.split(",").join(" ");
+        saveAs(htmlBlob, title + ' [' + tags + '].html');
+      } else {
+        saveAs(htmlBlob, title + '.html');
+      }
+    }
+
+    function purifyContent (content) {
+      var cleanedContent = content.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
+      // saving all images as png in base64 format if posible
+      var match,
+        urls = [],
+        imgUrl = "",
+        rex = /<img.*?src="([^">]*\/([^">]*?))".*?>/g;
+
+      while (match = rex.exec(cleanedContent)) {
+        imgUrl = match[1];
+        chrome.extension.getBackgroundPage().console.log("URLs: " + imgUrl);
+        urls.push([imgUrl, getBase64Image(imgUrl)]);
+      }
+
+      urls.forEach(function(dataURLObject) {
+        if (dataURLObject[1].length > 7) {
+          cleanedContent = cleanedContent.split(dataURLObject[0]).join(dataURLObject[1]);
+          chrome.extension.getBackgroundPage().console.log(dataURLObject[0]+" - "+dataURLObject[1]);
+        }
+      });
+      return cleanedContent;
+    }
 
     // I18n this panel
     $('[data-i18n]').each(function() {
@@ -129,6 +165,17 @@
           filename: filename, 
           saveAs: true 
         });
+      }
+    });
+  }
+
+  function saveAsHTML() {
+
+    chrome.tabs.executeScript(null, {
+      file: "chromium/capturePage.js"
+    }, function() {
+      if (chrome.extension.lastError) {
+        console.log('There was an error injecting script : \n' + chrome.extension.lastError.message);
       }
     });
   }
@@ -211,6 +258,7 @@
     }
     return cleanedHTML;
   }
+
 
   function loadSettingsLocalStorage() {
     try {
