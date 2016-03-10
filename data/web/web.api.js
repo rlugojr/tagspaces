@@ -17,7 +17,7 @@ define(function(require, exports, module) {
   var TSPOSTIO = require("tspostioapi");
 
   require("webdavlib/webdavlib");
-  require("webdavlib/offline.min");
+  require("offlinelib/offline.min");
 
   // Offline plugin settings
 
