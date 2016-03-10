@@ -17,6 +17,20 @@ define(function(require, exports, module) {
   var TSPOSTIO = require("tspostioapi");
 
   require("webdavlib/webdavlib");
+  require("webdavlib/offline.min");
+
+  // Offline plugin settings
+
+  Offline.options {
+     checkOnLoad: false,
+     interceptRequests: true,
+     reconnect: {
+      initialDelay: 3,
+      delay: (1.5 * last delay, capped at 1 hour)
+     },
+     requests: true,
+     game: false
+  }
 
   var davClient;
   //exact copy of getAjax with timeout added 
