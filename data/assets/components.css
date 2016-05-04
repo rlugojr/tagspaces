@@ -4,6 +4,13 @@
 /* LOADING ANIMATION based on https://github.com/tobiasahlin/SpinKit
 Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
 */
+
+:root {
+  --gray: #333;
+  --blue: #2e6da4;
+  --white: #ffffff;
+}
+
 .loadingAnimation {
   width: 100%;
 }
@@ -17,8 +24,7 @@ Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
 .loadingAnimation .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: #333;
-
+  background-color: var(--gray);
   border-radius: 100%;
   display: inline-block;
   -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
@@ -66,8 +72,7 @@ Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
 .waitingAnimation .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: #333;
-
+  background-color: var(--gray);
   border-radius: 100%;
   display: inline-block;
   -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
@@ -91,44 +96,69 @@ Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
 
 /* TOGGLE SWITCH */
 .onoffswitch {
-    position: relative; width: 58px;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    position: relative; 
+    width: 58px;
+    -webkit-user-select:none; 
+    -moz-user-select:none; 
+    -ms-user-select: none;
 }
 .onoffswitch-checkbox {
     display: none;
 }
 .onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 1px solid #2e6da4; border-radius: 3px;
+    display: block; overflow: hidden; 
+    cursor: pointer;
+    border: 1px solid var(--blue); 
+    border-radius: 3px;
 }
 .onoffswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
-    -moz-transition: margin 0.2s ease-in 0s; -webkit-transition: margin 0.2s ease-in 0s;
-    -o-transition: margin 0.2s ease-in 0s; transition: margin 0.2s ease-in 0s;
+    display: block; width: 200%; 
+    margin-left: -100%;
+    -moz-transition: margin 0.2s ease-in 0s; 
+    -webkit-transition: margin 0.2s ease-in 0s;
+    -o-transition: margin 0.2s ease-in 0s; 
+    transition: margin 0.2s ease-in 0s;
 }
 .onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; float: left; width: 50%; height: 20px; padding: 0; line-height: 20px;
-    font-size: 16px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+    display: block; 
+    float: left; 
+    width: 50%; 
+    height: 20px; 
+    padding: 0; 
+    line-height: 20px;
+    font-size: 16px; 
+    color: var(--white); 
+    font-family: Trebuchet, Arial, sans-serif; 
+    font-weight: bold;
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box;
 }
 .onoffswitch-inner:before {
     content: "";
     padding-left: 10px;
-    background-color: #337ab7; color: #FFFFFF;
+    background-color: #337ab7; 
+    color: var(--white);
 }
 .onoffswitch-inner:after {
     content: "";
     padding-right: 10px;
-    background-color: #F8F8F8; color: #666666;
+    background-color: #F8F8F8; 
+    color: #666666;
     text-align: right;
 }
 .onoffswitch-switch {
     display: block; width: 30px; margin: 0px;
-    background: #FFFFFF;
-    border: 1px solid #2e6da4; border-radius: 3px;
-    position: absolute; top: 0; bottom: 0; right: 24px;
-    -moz-transition: all 0.2s ease-in 0s; -webkit-transition: all 0.2s ease-in 0s;
-    -o-transition: all 0.2s ease-in 0s; transition: all 0.2s ease-in 0s;
+    background: var(--white);
+    border: 1px solid var(--blue); 
+    border-radius: 3px;
+    position: absolute; 
+    top: 0; 
+    bottom: 0; right: 24px;
+    -moz-transition: all 0.2s ease-in 0s; 
+    -webkit-transition: all 0.2s ease-in 0s;
+    -o-transition: all 0.2s ease-in 0s; 
+    transition: all 0.2s ease-in 0s;
     background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
     background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
     background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
@@ -160,7 +190,7 @@ Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
     margin: 3px;
     padding: 4px 4px 4px 15px !important;
     background: #008000 !important;
-    color: white !important;
+    color: var(--white) !important;
     border: 0;
     z-index: 9999;
     border-radius: 5px !important;
