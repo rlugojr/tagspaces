@@ -1,31 +1,41 @@
 /* Copyright (c) 2012-2015 The TagSpaces Authors. All rights reserved. Use of this source code
- * is governed by a AGPL3 license that can be found in the LICENSE file. */
+* is governed by a AGPL3 license that can be found in the LICENSE file. */
+
+:root {
+  --lightestgray-color: #f2f2f2;
+  --lightergray-color: #dddddd;
+  --lightgray-color: #616577;
+  --gray-color: #d3d3d3;
+  --dark-gray-color: #444444;
+  --darker-gray-color: #404040;
+  --white-color: #ffffff;
+}
 
 .appbody {
   position: fixed;
-	top: 0;
-	left: 0;
-	right:0;
+  top: 0;
+  left: 0;
+  right:0;
 }
 
 #logo {
-	padding: 0;
-	font-size: 1.5em;
-	margin: 3px;
-  color: #616577;
-	font-weight: bold;
-	padding-left: 32px;
+  padding: 0;
+  font-size: 1.5em;
+  margin: 3px;
+  color: var(--lightgray-color);
+  font-weight: bold;
+  padding-left: 32px;
   padding-top: 4px;
-	background: url("icon.svg") no-repeat left center;
+  background: url("icon.svg") no-repeat left center;
   background-size: 28px 28px;
-	background-position: 0 0;
-	height: 31px;
-	display: inline-block;
+  background-position: 0 0;
+  height: 31px;
+  display: inline-block;
 }
 
 #appVersion {
   font-size: 1.3em;
-  color: #616577;
+  color: var(--lightgray-color);
 }
 
 #startNewInstanceBack {
@@ -35,14 +45,13 @@
 #currentLocation {
   padding: 0;
   font-size: 1.3em;
-  color: lightgray;
+  color: var(--gray-color);
   display: inline-block;
   margin: 6px;
 }
 
 #statusBar {
   margin-top: 12px;
-  font-size: 14px;
   font-size: 12px;
   text-align: center;
 }
@@ -58,11 +67,11 @@
 }
 
 #fileDropExplanation {
-  top:45%;
+  top: 45%;
   width: 100%;
   text-align: center;
-  position:absolute;
-  color: white;
+  position: absolute;
+  color: var(--white-color);
   font-size: 20px;
 }
 
@@ -93,7 +102,7 @@
 
 #fileTitle:hover {
   text-decoration: none;
-  background-color: rgb(210, 210, 210);
+  background-color: #d2d2d2;
 }
 
 /* bootstrap3xeditable class */
@@ -111,16 +120,8 @@
   display: inline-block;
 }
 
-#viewsRadio input {
-	display: inline-block;
-}
-
-#fileSortRadio {
-	display: inline-block;
-}
-
-#fileSortRadio input {
-	display: inline-block;
+#viewsRadio input, #fileSortRadio input, #fileSortRadio {
+  display: inline-block;
 }
 
 #dialogAbout {
@@ -128,19 +129,19 @@
 }
 
 #container {
-  height:     100%;
-  margin:     0 auto;
-  width:      100%;
-  min-width:  700px;
+  height: 100%;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 700px;
 }
 
 /* Layout */
 #locationContent, #tagGroupsContent{
-	background-color:  transparent;
+  background-color: transparent;
 }
 
 #tagGroupsContent {
-	min-height: 50px;
+  min-height: 50px;
 }
 
 #clearFilterButton {
@@ -148,17 +149,7 @@
   padding-right: 10px;
 }
 
-#searchButton {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-#clearSearchButton {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-#showSearchOptionsButton {
+#searchButton, #clearSearchButton, #showSearchOptionsButton {
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -166,13 +157,13 @@
 #searchToolbar {
   border-radius: 4px;
   width: 300px;
-  background-color: #DBDBDB;
+  background-color: #dbdbdb;
   display: none;
   margin-left: 4px;
   margin-right: 4px;
   margin-bottom: 4px;
   z-index: 1;
-  box-shadow: -20px 0px 28px -7px rgba(244, 244, 244, 1);
+  box-shadow: -20px 0 28px -7px rgba(244, 244, 244, 1);
 }
 
 #searchBox {
@@ -190,9 +181,9 @@
 }
 
 #tagsContainer {
-	width: 100%;
-	min-height: 40px;
-	margin: 0;
+  width: 100%;
+  min-height: 40px;
+  margin: 0;
 }
 
 #viewToolbars {
@@ -200,27 +191,25 @@
 }
 
 #viewContainers {
-  background-color: white;
+  background-color: var(--white-color);
   padding: 0;
 }
 
 #viewer {
-  background-color: white;
+  background-color: var(--white-color);
   width: 100%;
   /*height: 100%;*/
 }
-
 
 /* Directory Navigation */
 
 .dirButton  {
   font-size: 13px;
-  background-color: #E5E5E5;
-  color: #444444;
+  background-color: #e5e5e5;
+  color: var(--dark-gray-color);
   background-image: none;
   margin: 1px;
   text-align: left;
-
   flex: 1 1 auto;
   -webkit-flex: 1 1 auto;
   -ms-flex: 1 1 auto;
@@ -236,7 +225,6 @@
   display: flex;
   display: -webkit-flex;
   display: -ms-flexbox;
-
   flex-wrap: wrap;
 }
 
@@ -247,19 +235,19 @@
 }
 
 .dirButton:hover, .dirButton:active, .dirButton:focus {
-  background-color: #ddd;
+  background-color: var(--lightergray-color);
 }
 
 .dropOnFolder {
-  background-color: #F6A828 !important;
+  background-color: #f6a828 !important;
 }
 
 .dirButtonActive  {
-  background-color: #E2E2E2 !important;
+  background-color: #e2e2e2 !important;
 }
 
 #location .selectedDirectory {
-  background-color: #EBD5AA;
+  background-color: #ebd5aa;
 }
 
 #locationContent {
@@ -291,28 +279,27 @@
 }
 
 .tagButton .caret, .extTagButton .caret {
-    border-top-color: white !important;
+  border-top-color: var(--white-color) !important;
 }
 
 .tagButton {
-    padding: 2px 4px 2px 4px !important;
-    background: #008000 !important;
-    color: white !important;
-    margin: 1px;
-    border: 0;
-    z-index: 9999;
-    border-radius: 5px !important;
-    text-decoration: none  !important;
-    max-width: 150px;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  padding: 2px 4px 2px 4px !important;
+  background: #008000 !important;
+  color: var(--white-color) !important;
+  margin: 1px;
+  border: 0;
+  z-index: 9999;
+  border-radius: 5px !important;
+  text-decoration: none !important;
+  max-width: 150px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
-
 
 .directoryTitle {
   text-align: left;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 0;
+  padding-right: 0;
   font-size: 14px !important;
   max-width: 280px;
   text-overflow: ellipsis;
@@ -352,11 +339,11 @@ input a.resetFilter {
 }
 
 .icon-leaf:hover {
-  color: green;
+  color: #00ff00;
 }
 
 .groupTitle {
-  color: #444444;
+  color: var(--dark-gray-color);
   font-weight: bold;
   font-size: 12px;
   display: inline-block;
@@ -374,8 +361,8 @@ input a.resetFilter {
 }
 
 .white-caret {
-	border-top-color: white;
-	border-bottom-color: white;
+  border-top-color: var(--white-color);
+  border-bottom-color: var(--white-color);
 }
 
 .fileTitleButton {
@@ -386,16 +373,16 @@ input a.resetFilter {
 
 .fileExt {
   background-color: #515151;
-  text-transform:uppercase;
+  text-transform: uppercase;
   font-size: 12px;
   padding: 4px;
-  color: white;
+  color: var(--white-color);
 }
 
 .optionsTitle {
   text-transform: uppercase;
   font-weight: normal;
-  color: gray;
+  color: var(--gray-color);
   padding: 5px 10px 5px 10px !important;
   font-size: 12px;
 }
@@ -428,19 +415,19 @@ input a.resetFilter {
 
 #contactUsContent a {
   height: 45px;
-  color: #404040;
+  color: var(--darker-gray-color);
   width: 100%;
   text-align: left;
 }
 
 #alternativeNavigator .btn-link {
-  padding-left: 0px;
-  padding-right: 0px;
-  color: #404040;
+  padding-left: 0;
+  padding-right: 0;
+  color: var(--darker-gray-color);
 }
 
 #alternativeNavigator {
-  margin: 0px 5px 5px 0;
+  margin: 0 5px 5px 0;
   height: 30px;
   min-width: 100px;
   max-width: 150px
@@ -470,16 +457,16 @@ input a.resetFilter {
 }
 
 .altNavFolderTitle:hover {
-  background-color: lightgray;
+  background-color: var(--gray-color);
 }
 
 #closeOpenedFile {
   position: fixed;
   top: 1px;
-  right: 0px;
+  right: 0;
   height: 37px;
-  box-shadow: -11px 1px 24px -1px #F2F2F2;
-  background-color: #F2F2F2;
+  box-shadow: -11px 1px 24px -1px var(--lightestgray-color);
+  background-color: var(--lightestgray-color);
 }
 
 #perspectiveSwitcher {
@@ -497,12 +484,12 @@ input a.resetFilter {
   height: 22px;
   width: 35px;
   margin-right: 4px;
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 .contactUsSeparator {
   margin: 0 15px 0 15px;
-  border-top: 1px solid #ddd
+  border-top: 1px solid var(--lightergray-color);
 }
 
 .appBackgroundTile {
@@ -513,14 +500,14 @@ input a.resetFilter {
 
 /* Setting the background of every perspective to white */
 .col2 > .row2 > div {
-  background-color: white;
+  background-color: var(--white-color);
 }
 
 #exitFullScreen {
   position: absolute;
   top: 5px;
   right: 5px;
-  color: white;
+  color: var(--white-color);
   background-color: rgba(173, 173, 173, 0.5);
   display: none;
   z-index: 99999;
@@ -533,11 +520,11 @@ input a.resetFilter {
 }
 
 #perspectiveSwitcherButton {
-  background-color: #F2F2F2;
+  background-color: var(--lightestgray-color);
 }
 
 .betaTag {
-  color: red;
+  color: #ff0000;
   margin-left: 5px;
 }
 

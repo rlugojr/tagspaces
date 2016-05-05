@@ -1,14 +1,14 @@
 /* Copyright (c) 2012-2015 The TagSpaces Authors. All rights reserved. Use of this source code
- * is governed by a AGPL3 license that can be found in the LICENSE file. */
+* is governed by a AGPL3 license that can be found in the LICENSE file. */
 
 /* LOADING ANIMATION based on https://github.com/tobiasahlin/SpinKit
 Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
 */
 
 :root {
-  --gray: #333;
-  --blue: #2e6da4;
-  --white: #ffffff;
+  --animation-background-color: #333333;
+  --onoffswitch-border-color: #2e6da4;
+  --onoffswitch-select2-color: #ffffff;
 }
 
 .loadingAnimation {
@@ -24,7 +24,7 @@ Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
 .loadingAnimation .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: var(--gray);
+  background-color: var(--animation-background-color);
   border-radius: 100%;
   display: inline-block;
   -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
@@ -72,7 +72,7 @@ Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
 .waitingAnimation .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: var(--gray);
+  background-color: var(--animation-background-color);
   border-radius: 100%;
   display: inline-block;
   -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
@@ -93,89 +93,100 @@ Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
 }
 /* End LOADING ANIMATION */
 
-
 /* TOGGLE SWITCH */
 .onoffswitch {
-    position: relative; 
-    width: 58px;
-    -webkit-user-select:none; 
-    -moz-user-select:none; 
-    -ms-user-select: none;
+  position: relative; 
+  width: 58px;
+  -webkit-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none;
 }
+
 .onoffswitch-checkbox {
-    display: none;
+  display: none;
 }
+
 .onoffswitch-label {
-    display: block; overflow: hidden; 
-    cursor: pointer;
-    border: 1px solid var(--blue); 
-    border-radius: 3px;
+  display: block; 
+  overflow: hidden; 
+  cursor: pointer;
+  border: 1px solid var(--onoffswitch-border-color); 
+  border-radius: 3px;
 }
+
 .onoffswitch-inner {
-    display: block; width: 200%; 
-    margin-left: -100%;
-    -moz-transition: margin 0.2s ease-in 0s; 
-    -webkit-transition: margin 0.2s ease-in 0s;
-    -o-transition: margin 0.2s ease-in 0s; 
-    transition: margin 0.2s ease-in 0s;
+  display: block; 
+  width: 200%; 
+  margin-left: -100%;
+  -moz-transition: margin 0.2s ease-in 0s; 
+  -webkit-transition: margin 0.2s ease-in 0s;
+  -o-transition: margin 0.2s ease-in 0s; 
+  transition: margin 0.2s ease-in 0s;
 }
+
 .onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; 
-    float: left; 
-    width: 50%; 
-    height: 20px; 
-    padding: 0; 
-    line-height: 20px;
-    font-size: 16px; 
-    color: var(--white); 
-    font-family: Trebuchet, Arial, sans-serif; 
-    font-weight: bold;
-    -moz-box-sizing: border-box; 
-    -webkit-box-sizing: border-box; 
-    box-sizing: border-box;
+  display: block; 
+  float: left; 
+  width: 50%; 
+  height: 20px; 
+  padding: 0; 
+  line-height: 20px;
+  font-size: 16px; 
+  color: var(--onoffswitch-select2-color); 
+  font-family: Trebuchet, Arial, sans-serif; 
+  font-weight: bold;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
 }
+
 .onoffswitch-inner:before {
-    content: "";
-    padding-left: 10px;
-    background-color: #337ab7; 
-    color: var(--white);
+  content: "";
+  padding-left: 10px;
+  background-color: #337ab7; 
+  color: var(--onoffswitch-select2-color);
 }
+
 .onoffswitch-inner:after {
-    content: "";
-    padding-right: 10px;
-    background-color: #F8F8F8; 
-    color: #666666;
-    text-align: right;
+  content: "";
+  padding-right: 10px;
+  background-color: #f8f8f8; 
+  color: #666666;
+  text-align: right;
 }
+
 .onoffswitch-switch {
-    display: block; width: 30px; margin: 0px;
-    background: var(--white);
-    border: 1px solid var(--blue); 
-    border-radius: 3px;
-    position: absolute; 
-    top: 0; 
-    bottom: 0; right: 24px;
-    -moz-transition: all 0.2s ease-in 0s; 
-    -webkit-transition: all 0.2s ease-in 0s;
-    -o-transition: all 0.2s ease-in 0s; 
-    transition: all 0.2s ease-in 0s;
-    background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-    background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-    background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
-    background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+  display: block; 
+  width: 30px; 
+  margin: 0;
+  background: var(--onoffswitch-select2-color);
+  border: 1px solid var(--onoffswitch-border-color); 
+  border-radius: 3px;
+  position: absolute; 
+  top: 0; 
+  bottom: 0; right: 24px;
+  -moz-transition: all 0.2s ease-in 0s; 
+  -webkit-transition: all 0.2s ease-in 0s;
+  -o-transition: all 0.2s ease-in 0s; 
+  transition: all 0.2s ease-in 0s;
+  background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+  background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+  background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+  background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
 }
+
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
+  margin-left: 0;
 }
+
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px;
+  right: 0;
 }
 /* End TOGGLE SWITCH */
 
 /* SELECT2 */
-
 .select2-results {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .select2-container {
@@ -183,22 +194,21 @@ Licensed under MIT https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE
 }
 
 .select2-search-choice-close {
-    background-position: right -11px;
+  background-position: right -11px;
 }
 
 .select2-container-multi .select2-choices .select2-search-choice {
-    margin: 3px;
-    padding: 4px 4px 4px 15px !important;
-    background: #008000 !important;
-    color: var(--white) !important;
-    border: 0;
-    z-index: 9999;
-    border-radius: 5px !important;
-    text-decoration: none !important;
-    background-image: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+  margin: 3px;
+  padding: 4px 4px 4px 15px !important;
+  background: #008000 !important;
+  color: var(--onoffswitch-select2-color) !important;
+  border: 0;
+  z-index: 9999;
+  border-radius: 5px !important;
+  text-decoration: none !important;
+  background-image: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
-
 /* End SELECT2 */
