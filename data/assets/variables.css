@@ -1,0 +1,15 @@
+:root {
+  --animation-background-color: #333333;
+  --onoffswitch-border-color: #2e6da4;
+  --onoffswitch-select2-color: #ffffff;
+  --lightestgray-color: #f2f2f2;
+  --lightergray-color: #dddddd;
+  --lightgray-color: #616577;
+  --gray-color: #d3d3d3;
+  --dark-gray-color: #444444;
+  --darker-gray-color: #404040;
+  --white-color: #ffffff;
+  --modal-background-color: #f6f6f6;
+  --tap-highlight-color: rgba(0,0,0,0);
+  --roundButton-color: #ffffff;
+}
