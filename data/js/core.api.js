@@ -29,6 +29,7 @@ define(function(require, exports, module) {
   var tsMeta = require('tsmeta');
   var tsExt = require('tsextapi');
   var tsExtManager = require('tsextmanager');
+  var TSCORE = require('tscore');
 
   // Defining variables
   var currentPath;
@@ -212,7 +213,9 @@ define(function(require, exports, module) {
       tsSearchUI.showSearchArea();
     });
     Mousetrap.bind(tsSettings.getRenamingFileKeyBinding(), function() {
-      tsCoreUI.showRenameFileDialog();
+      if (TSCORE.selectedFiles[0]) {
+        tsCoreUI.showFileRenameDialog(TSCORE.selectedFiles[0]);
+      }
     });
   }
 

@@ -71,7 +71,7 @@ define(function(require, exports, module) {
       var reader = new FileReader();
       reader.onload = onFileReadComplete;
       if (isCordova) {
-        reader.readAsDataURL(file);
+        //reader.readAsDataURL(file);
       } else {
         reader.readAsArrayBuffer(file);
       }
@@ -183,7 +183,7 @@ define(function(require, exports, module) {
       }
     });
 
-    function eulaVersion() {
+    function reloadAboutContent() {
       if (TSCORE.PRO) {
         $('#aboutIframe').attr('src', 'pro/about.html');
       } else {
@@ -192,13 +192,13 @@ define(function(require, exports, module) {
     }
 
     $('#aboutDialogBack').click(function() {
-      eulaVersion();
+      reloadAboutContent();
     });
     $('#confirmButtonDialog').click(function() {
-      eulaVersion();
+      reloadAboutContent();
     });
     $('#closeDialog').click(function() {
-      eulaVersion();
+      reloadAboutContent();
     });
 
     // Open About Dialog
@@ -818,6 +818,34 @@ define(function(require, exports, module) {
     });
   }
 
+  function eulaVersion() {
+    if (TSCORE.PRO) {
+      $('#eulaIframe').attr('src', 'pro/EULA.txt');
+    } else {
+      $('#eulaIframe').attr('src', 'LICENSE.txt');
+    }
+  }
+
+  $('#eulaDialogBack').click(function() {
+    eulaVersion();
+  });
+  $('#confirmEulaDialog').click(function() {
+    eulaVersion();
+  });
+  $('#closeEulaDialog').click(function() {
+    eulaVersion();
+  });
+
+  function showLicenseDialog() {
+    $('#aboutLicenseModal').modal({
+      backdrop: 'static',
+      show: true
+    });
+    $('#aboutLicenseModal').draggable({
+      handle: ".modal-header"
+    });
+  }
+
   function disableTopToolbar() {
     $('#perspectiveSwitcherButton').prop('disabled', true);
     $('#searchBox').prop('disabled', true);
@@ -996,6 +1024,7 @@ define(function(require, exports, module) {
   exports.showTagEditDialog = showTagEditDialog;
   exports.showOptionsDialog = showOptionsDialog;
   exports.showAboutDialog = showAboutDialog;
+  exports.showLicenseDialog = showLicenseDialog;
   exports.showLocationsPanel = showLocationsPanel;
   exports.showTagsPanel = showTagsPanel;
   exports.showContactUsPanel = showContactUsPanel;
