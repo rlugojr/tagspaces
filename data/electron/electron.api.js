@@ -72,7 +72,10 @@ define(function(require, exports, module) {
           {
             label: $.i18n.t("ns.common:openNewInstance"),
             accelerator: '',
-            click: TSCORE.UI.openNewInstance
+            //click: TSCORE.UI.openNewInstance
+            click: function (){
+              ipcRenderer.send('newWindow', 'newWindow');
+            }
           },
           {
             type: 'separator'
@@ -233,6 +236,17 @@ define(function(require, exports, module) {
               TSCORE.UI.showOptionsDialog();
             }
           },
+        ]
+      },
+      {
+        label: $.i18n.t("ns.common:tools"),
+        submenu: [
+          {
+            label: $.i18n.t("ns.common:ocrImage"),
+            click: function() {
+              ipcRenderer.send('ocrImage', 'newBrowserWindow');
+            }
+          }
         ]
       },
       {

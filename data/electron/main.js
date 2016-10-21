@@ -32,6 +32,35 @@ ipcMain.on('quit-application', function(event, arg) {
   app.quit();
 });
 
+ipcMain.on('ocrImage', function(event, arg) {
+  if(arg === 'newBrowserWindow'){
+    /* OCR IMAGE TOOL STUFF */
+    var ocrImageWIndow = new BrowserWindow({
+      'width' : 800,
+      'height' : 560,
+      //'index' : indexPath
+    });
+
+    var startupParameter = "";
+    if (startupFilePath) {
+      startupParameter = "?open=" + encodeURIComponent(startupFilePath);
+    }
+    var indexPath = 'file://' + path.dirname(__dirname) + '/OcrImage.html' + startupParameter;
+
+    ocrImageWIndow.setMenu(null);
+    ocrImageWIndow.loadURL(indexPath);
+
+    ocrImageWIndow.once('show', function () {
+      ocrImageWIndow.window.openDevTools();
+    });
+
+    ocrImageWIndow.on('ready', function ready () {
+      console.log('>> Wait');
+    });
+    //ocrImage.setOption('index', feedHTML);
+  }
+});
+
 var path = require('path');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -100,6 +129,8 @@ app.on('ready', function(event) {
     trayIconPath = 'Contents/Resources/app/assets/trayicon.png';
   } else if (process.platform === 'win32') {
     trayIconPath = 'resources/app/assets/trayicon.png';
+    trayIconPath = 'assets/trayicon.png';
+
   } else {
     trayIconPath = 'resources/app/assets/trayicon.png';
   }
@@ -109,7 +140,6 @@ app.on('ready', function(event) {
   }
 
   trayIcon = new Tray(trayIconPath);
-
 
   var trayMenuTemplate = [
     {

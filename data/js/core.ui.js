@@ -381,6 +381,7 @@ define(function(require, exports) {
 
   function openNewInstance() {
     if (!isCordova) {
+      console.log(window.location.href);
       window.open(window.location.href, '_blank', 'width=1260,height=748');
     }
   }
