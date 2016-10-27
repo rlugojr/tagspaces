@@ -12,7 +12,7 @@ const dialog = electron.dialog;
 var debugMode;
 var startupFilePath;
 var trayIcon = null;
-var ocrImageWIndow;
+var ocrImageWindow;
 
 //handling start parameter
 //console.log(JSON.stringify(process.argv));
@@ -31,37 +31,6 @@ process.argv.forEach(function(arg, count) {
 
 ipcMain.on('quit-application', function(event, arg) {
   app.quit();
-});
-
-function ocrWindow(){
-  ocrImageWIndow = new BrowserWindow({
-    'width': 800,
-    'height': 560,
-    //'index' : indexPath
-  });
-
-  var startupParameter = "";
-  if (startupFilePath) {
-    startupParameter = "?open=" + encodeURIComponent(startupFilePath);
-  }
-  var indexPath = 'file://' + path.dirname(__dirname) + '/pro/templates/OcrImage.html' + startupParameter;
-
-  ocrImageWIndow.setMenu(null);
-  ocrImageWIndow.loadURL(indexPath);
-  return ocrImageWIndow;
-}
-
-ipcMain.on('ocrImage', function(event, arg) {
-  ocrImageWIndow = ocrWindow();
-  ocrImageWIndow.show();
-  //ocrImageWIndow.once('show', function() {
-  //  ocrImageWIndow.window.openDevTools();
-  //});
-  //
-  //ocrImageWIndow.on('ready', function ready() {
-  //  console.log('>> Wait');
-  //});
-  //ocrImage.setOption('index', feedHTML);
 });
 
 var path = require('path');
@@ -132,8 +101,6 @@ app.on('ready', function(event) {
     trayIconPath = 'Contents/Resources/app/assets/trayicon.png';
   } else if (process.platform === 'win32') {
     trayIconPath = 'resources/app/assets/trayicon.png';
-    trayIconPath = 'assets/trayicon.png';
-
   } else {
     trayIconPath = 'resources/app/assets/trayicon.png';
   }
@@ -258,6 +225,38 @@ app.on('ready', function(event) {
     //mainWindow.show();
     mainWindow.webContents.send('play-pause', true);
   }
+});
+
+function ocrWindow() {
+  ocrImageWindow = new BrowserWindow({
+    'width': 800,
+    'height': 560
+    //'index' : indexPath
+  });
+
+  var startupParameter = "";
+  if (startupFilePath) {
+    startupParameter = "?open=" + encodeURIComponent(startupFilePath);
+  }
+  var indexPath = 'file://' + path.dirname(__dirname) + '/pro/templates/OcrImage.html' + startupParameter;
+
+  ocrImageWindow.webContents.openDevTools();
+
+  ocrImageWindow.setMenu(null);
+  ocrImageWindow.loadURL(indexPath);
+  return ocrImageWindow;
+}
+
+var fpath;
+ipcMain.on('ocrImageWindow', function(event, arg) {
+  ocrImageWindow = ocrWindow();
+  ocrImageWindow.show();
+  fpath = arg;
+  //ocrImage.setOption('index', feedHTML);
+});
+
+ipcMain.on('ocr-message', function(event, arg) {
+  event.sender.send('ocr-reply', fpath);
 });
 
 process.on('uncaughtException', function(error) {

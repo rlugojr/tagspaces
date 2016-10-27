@@ -25,13 +25,6 @@ define(function(require, exports, module) {
   var fsWatcher;
   var win = remote.getCurrentWindow();
 
-
-  //console.log(ipcRenderer.sendSync('synchronous-message', 'ping')); // prints "pong"
-  //ipcRenderer.on('asynchronous-reply', function(event, arg) {
-  //  console.log(arg); // prints "pong"
-  //});
-  //ipcRenderer.send('asynchronous-message', 'ping');
-
   var showMainWindow = function() {
     win.show();
   };
@@ -72,10 +65,7 @@ define(function(require, exports, module) {
           {
             label: $.i18n.t("ns.common:openNewInstance"),
             accelerator: '',
-            //click: TSCORE.UI.openNewInstance
-            click: function (){
-              ipcRenderer.send('newWindow', 'newWindow');
-            }
+            click: TSCORE.UI.openNewInstance
           },
           {
             type: 'separator'
@@ -244,7 +234,7 @@ define(function(require, exports, module) {
           {
             label: $.i18n.t("ns.common:ocrImage"),
             click: function() {
-              ipcRenderer.send('ocrImage', 'newBrowserWindow');
+              ipcRenderer.send('ocrImageWindow', TSCORE.selectedFiles);
             }
           }
         ]
