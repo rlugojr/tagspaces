@@ -247,16 +247,16 @@ function ocrWindow() {
   return ocrImageWindow;
 }
 
-var fpath;
+var fileArg;
 ipcMain.on('ocrImageWindow', function(event, arg) {
   ocrImageWindow = ocrWindow();
   ocrImageWindow.show();
-  fpath = arg;
+  fileArg = arg;
   //ocrImage.setOption('index', feedHTML);
 });
 
 ipcMain.on('ocr-message', function(event, arg) {
-  event.sender.send('ocr-reply', fpath);
+  event.sender.send('ocr-reply', fileArg);
 });
 
 process.on('uncaughtException', function(error) {
