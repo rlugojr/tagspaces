@@ -11,7 +11,12 @@ define(function(require, exports, module) {
 
     switch (command) {
       case "generatedText":
-        console.log('GENERATE NEW TEXT');
+        if (TSCORE.PRO) {
+          console.log('GENERATE NEW TEXT FILE');
+          TSCORE.PRO.saveTextContent('TestFile.txt', data);
+        } else {
+          console.log("TSCORE.PRO it's not recognized");
+        }
         break;
       case "saveDocument":
         TSCORE.FileOpener.saveFile();

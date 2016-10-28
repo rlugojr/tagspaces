@@ -256,9 +256,10 @@ ipcMain.on('ocrImageWindow', function(event, arg) {
 });
 
 ipcMain.on('ocr-message', function(event, arg) {
-  event.sender.send('ocr-reply', fileArg);
-  if(arg.id === 'generatedText'){
+  if (arg.id) {
     mainWindow.webContents.send('generated-text', arg.text);
+  } else {
+    event.sender.send('ocr-reply', fileArg);
   }
 });
 
