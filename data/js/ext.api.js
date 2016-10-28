@@ -10,6 +10,9 @@ define(function(require, exports, module) {
     var command = data.command;
 
     switch (command) {
+      case "generatedText":
+        console.log('GENERATE NEW TEXT');
+        break;
       case "saveDocument":
         TSCORE.FileOpener.saveFile();
         break;
@@ -53,14 +56,13 @@ define(function(require, exports, module) {
   function openLinkExternally(uri) {
     uri = decodeURIComponent(uri);
     if (
-            uri.indexOf("http://") === 0 ||
-            uri.indexOf("https://") === 0 ||
-            uri.indexOf("file://") === 0
+      uri.indexOf("http://") === 0 ||
+      uri.indexOf("https://") === 0 ||
+      uri.indexOf("file://") === 0
     ) {
       TSCORE.IO.openFile(uri);
     } else {
       console.log("Not supported URL format: " + uri);
     }
   }
-
 });

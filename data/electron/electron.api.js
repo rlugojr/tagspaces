@@ -411,6 +411,12 @@ define(function(require, exports, module) {
       var audioEvent = new CustomEvent('resume', {'detail': arg});
       window.dispatchEvent(audioEvent);
     });
+
+    ipcRenderer.on("generated-text", function(event, arg) {
+      // Create the event.
+      var msg = {command: "generatedText", text: arg};
+      window.parent.postMessage(JSON.stringify(msg), "*");
+    });
   }
 
   // Brings the TagSpaces window on top of the windows
