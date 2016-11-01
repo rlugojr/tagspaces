@@ -16,9 +16,8 @@ define(function(require, exports, module) {
       case "generatedText":
         if (TSCORE.PRO) {
           console.log('GENERATE NEW TEXT FILE');
-          TSCORE.PRO.saveTextContent('TestFile.txt', data);
-        } else {
-          console.log("TSCORE.PRO it's not recognized");
+          console.log(data);
+          TSCORE.PRO.saveTextContent(data.textFile.title, data.textFile.text);
         }
         break;
       case "saveDocument":

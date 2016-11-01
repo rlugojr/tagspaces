@@ -338,7 +338,7 @@ ipcMain.on('ocrImageWindow', function(event, arg) {
 
 ipcMain.on('ocr-message', function(event, arg) {
   if (arg.id) {
-    mainWindow.webContents.send('generated-text', arg.text);
+    mainWindow.webContents.send('generated-text', arg);
   } else {
     event.sender.send('ocr-reply', fileArg);
   }

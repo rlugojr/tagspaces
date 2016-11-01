@@ -425,7 +425,7 @@ define(function(require, exports, module) {
 
     ipcRenderer.on("generated-text", function(event, arg) {
       // Create the event.
-      var msg = {command: "generatedText", text: arg};
+      var msg = {command: "generatedText", textFile: arg};
       window.parent.postMessage(JSON.stringify(msg), "*");
     });
   }
