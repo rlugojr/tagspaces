@@ -10,6 +10,9 @@ define(function(require, exports, module) {
     var command = data.command;
 
     switch (command) {
+      case "showAlertDialog":
+        TSCORE.showAlertDialog(data.message, data.title);
+        break;
       case "generatedText":
         if (TSCORE.PRO) {
           console.log('GENERATE NEW TEXT FILE');
@@ -70,4 +73,5 @@ define(function(require, exports, module) {
       console.log("Not supported URL format: " + uri);
     }
   }
+
 });
