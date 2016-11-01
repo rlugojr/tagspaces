@@ -36,7 +36,8 @@ ipcMain.on('quit-application', function(event, arg) {
 var path = require('path');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-var mainWindow = null;
+var mainWindow = null, newWindow = null;
+//var childWindow = null;
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
@@ -50,6 +51,35 @@ app.on('window-all-closed', function() {
 app.on('will-quit', function() {
   // Unregister all shortcuts.
   globalShortcut.unregisterAll();
+});
+
+ipcMain.on("new-win", function() {
+  newWindow = new BrowserWindow({width: 1280, height: 768});
+  //var indexPath = 'file://' + __dirname + '/index.html';
+  var startupParameter = "";
+  if (startupFilePath) {
+    startupParameter = "?open=" + encodeURIComponent(startupFilePath);
+  }
+  var indexPath = 'file://' + path.dirname(__dirname) + '/index.html' + startupParameter;
+
+  newWindow.setMenu(null);
+  newWindow.loadURL(indexPath);
+
+  if (debugMode) {
+    newWindow.webContents.openDevTools();
+  }
+
+  newWindow.once('ready-to-show', function() {
+    newWindow.show();
+  });
+
+  ipcMain.on('win-close', function(e, arg) {
+    newWindow.hide();
+  });
+
+  ipcMain.on('close', function(e, arg) {
+    newWindow.hide();
+  });
 });
 
 app.on('ready', function(event) {
@@ -79,6 +109,10 @@ app.on('ready', function(event) {
     mainWindow = null;
   });
 
+  ipcMain.on('close', function(e, arg) {
+    mainWindow.hide();
+  });
+
   mainWindow.webContents.on('crashed', function() {
     const options = {
       type: 'info',
@@ -95,6 +129,12 @@ app.on('ready', function(event) {
       }
     });
   });
+
+  ipcMain.on('win-close', function(e, arg) {
+    mainWindow.hide();
+  });
+
+  var focusedWindow = BrowserWindow.getFocusedWindow();
 
   var trayIconPath;
   if (process.platform === 'darwin') {
@@ -166,7 +206,11 @@ app.on('ready', function(event) {
   ];
 
   trayIcon.on('click', function() {
-    mainWindow.show();
+    if (mainWindow) {
+      mainWindow.show();
+    } else {
+      newWindow.show();
+    }
     //mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
   });
 
@@ -180,50 +224,87 @@ app.on('ready', function(event) {
 
   globalShortcut.register('CommandOrControl+Alt+N', newTextFile);
 
-  globalShortcut.register('CommandOrControl+Alt+W', getNextFile);
+  globalShortcut.register('CommandOrControl+Alt+D', getNextFile);
 
-  globalShortcut.register('CommandOrControl+Alt+Q', getPreviousFile);
+  globalShortcut.register('CommandOrControl+Alt+A', getPreviousFile);
 
   globalShortcut.register('CommandOrControl+Alt+S', showTagSpaces);
 
   function showTagSpaces() {
-    mainWindow.show();
+    if (mainWindow) {
+      mainWindow.show();
+    } else {
+      newWindow.show();
+    }
     //mainWindow.webContents.send("showing-tagspaces", "tagspaces");
   }
 
   function newTextFile() {
-    mainWindow.show();
-    mainWindow.webContents.send("new-file", "text");
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.webContents.send("new-file", "text");
+    } else {
+      newWindow.show();
+      newWindow.webContents.send("new-file", "text");
+    }
   }
 
   function newHTMLFile() {
-    mainWindow.show();
-    mainWindow.webContents.send("new-file", "html");
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.webContents.send("new-file", "html");
+    } else {
+      newWindow.show();
+      newWindow.webContents.send("new-file", "html");
+    }
   }
 
   function newMDFile() {
-    mainWindow.show();
-    mainWindow.webContents.send("new-file", "markdown");
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.webContents.send("new-file", "markdown");
+    } else {
+      newWindow.show();
+      newWindow.webContents.send("new-file", "markdown");
+    }
   }
 
   function newAudioFile() {
-    mainWindow.show();
-    mainWindow.webContents.send("new-file", "audio");
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.webContents.send("new-file", "audio");
+    } else {
+      newWindow.show();
+      newWindow.webContents.send("new-file", "audio");
+    }
   }
 
   function getNextFile() {
-    mainWindow.show();
-    mainWindow.webContents.send("next-file", "next");
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.webContents.send("new-file", "next");
+    } else {
+      newWindow.show();
+      newWindow.webContents.send("new-file", "next");
+    }
   }
 
   function getPreviousFile() {
-    mainWindow.show();
-    mainWindow.webContents.send("previous-file", "previous");
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.webContents.send("new-file", "previous");
+    } else {
+      newWindow.show();
+      newWindow.webContents.send("new-file", "previous");
+    }
   }
 
   function resumePlayback() {
-    //mainWindow.show();
-    mainWindow.webContents.send('play-pause', true);
+    if (mainWindow) {
+      mainWindow.webContents.send("play-pause", true);
+    } else {
+      newWindow.webContents.send("play-pause", true);
+    }
   }
 });
 
@@ -267,7 +348,11 @@ process.on('uncaughtException', function(error) {
   if (error.stack) {
     console.error('error:', error.stack);
   }
-  mainWindow.reload();
+  if (mainWindow) {
+    mainWindow.reload();
+  } else {
+    newWindow.reload();
+  }
   // Handle the error
   /*if (error) {
    const options = {
