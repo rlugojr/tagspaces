@@ -94,11 +94,6 @@ define(function(require, exports, module) {
             click: TSCORE.UI.showAudioRecordingDialog
           },
           {
-            label: $.i18n.t("ns.common:createAdvancedFile"),
-            accelerator: '',
-            click: TSCORE.UI.showFileCreateDialog
-          },
-          {
             type: 'separator'
           },
           {
@@ -643,6 +638,7 @@ define(function(require, exports, module) {
       fs.lstat(path, function(err, stats) {
         if (err) {
           resolve(false);
+          return;
         }
 
         if (stats) {
@@ -671,8 +667,9 @@ define(function(require, exports, module) {
       fs.mkdir(dirPath, function(error) {
         if (error) {
           reject("Error creating folder: " + dirPath);
+          return;
         }
-        resolve();
+        resolve(dirPath);
       });
     });
   }
@@ -687,37 +684,26 @@ define(function(require, exports, module) {
    * @returns {Promise.<Success, Error>}
    */
   function copyFilePromise(sourceFilePath, targetFilePath) {
+    console.log("Copying file: " + sourceFilePath + " to " + targetFilePath);
     return new Promise(function(resolve, reject) {
-      getPropertiesPromise(sourceFilePath).then(function(entry) {
-        if (!entry.isFile) {
-          reject($.i18n.t("ns.common:fileIsDirectory", {fileName: sourceFilePath}));
-        } else {
-          getPropertiesPromise(targetFilePath).then(function(entry2) {
-            if (entry2) {
-              reject($.i18n.t("ns.common:fileExists", {fileName: targetFilePath}));
-            } else {
-
-              var rd = fs.createReadStream(sourceFilePath);
-              rd.on("error", function(err) {
-                reject($.i18n.t("ns.common:fileCopyFailed", {fileName: sourceFilePath}));
-              });
-              var wr = fs.createWriteStream(targetFilePath);
-              wr.on("error", function(err) {
-                reject($.i18n.t("ns.common:fileCopyFailed", {fileName: sourceFilePath}));
-              });
-              wr.on("close", function(ex) {
-                resolve();
-              });
-              rd.pipe(wr);
-
-            }
-          }, function(err) {
-            reject(err);
-          });
-        }
-      }, function(err) {
-        reject(err);
-      });
+      if (sourceFilePath === targetFilePath) {
+        reject($.i18n.t("ns.common:fileTheSame"), "File copying failed");
+        return;
+      } else if (fs.lstatSync(sourceFilePath).isDirectory()) {
+        reject($.i18n.t("ns.common:fileIsDirectory", {fileName: sourceFilePath}));
+        return;
+      } else if (fs.existsSync(targetFilePath)) {
+        reject($.i18n.t("ns.common:fileExists", {fileName: targetFilePath}), "File copying failed");
+        return;
+      } else {
+        fs.copy(sourceFilePath, targetFilePath, function(error) {
+          if (error) {
+            reject("Copying: " + sourceFilePath + " failed.");
+            return;
+          }
+          resolve([sourceFilePath, targetFilePath]);
+        });
+      }
     });
   }
 
@@ -735,14 +721,18 @@ define(function(require, exports, module) {
     return new Promise(function(resolve, reject) {
       if (filePath === newFilePath) {
         reject($.i18n.t("ns.common:fileTheSame"), $.i18n.t("ns.common:fileNotMoved"));
+        return;
       } else if (fs.lstatSync(filePath).isDirectory()) {
         reject($.i18n.t("ns.common:fileIsDirectory", {fileName: filePath}));
+        return;
       } else if (fs.existsSync(newFilePath)) {
         reject($.i18n.t("ns.common:fileExists", {fileName: newFilePath}), $.i18n.t("ns.common:fileRenameFailed"));
+        return;
       } else {
         fs.move(filePath, newFilePath, {clobber: true}, function(error) {
           if (error) {
-            reject("Renaming: " + filePath + " failed.");
+            reject("Renaming: " + filePath + " failed.", error);
+            return;
           }
           resolve([filePath, newFilePath]);
         });
@@ -762,11 +752,14 @@ define(function(require, exports, module) {
   function renameDirectoryPromise(dirPath, newDirName) {
     var newDirPath = TSCORE.TagUtils.extractParentDirectoryPath(dirPath) + TSCORE.dirSeparator + newDirName;
     console.log("Renaming dir: " + dirPath + " to " + newDirPath);
+    stopWatchingDirectories();
     return new Promise(function(resolve, reject) {
       if (dirPath === newDirPath) {
         reject($.i18n.t("ns.common:directoryTheSame"), $.i18n.t("ns.common:directoryNotMoved"));
+        return;
       } else if (fs.existsSync(newDirPath)) {
         reject($.i18n.t("ns.common:directoryExists", {dirName: newDirPath}), $.i18n.t("ns.common:directoryRenameFailed"));
+        return;
       } else {
         var dirStatus = fs.lstatSync(dirPath);
         if (dirStatus.isDirectory) {
@@ -774,11 +767,13 @@ define(function(require, exports, module) {
             if (error) {
               console.error("Renaming directory failed " + error);
               reject("Renaming " + dirPath + " failed.");
+              return;
             }
             resolve(newDirPath);
           });
         } else {
           reject($.i18n.t("ns.common:pathIsNotDirectory", {dirName: dirPath}), $.i18n.t("ns.common:directoryRenameFailed"));
+          return;
         }
       }
     });
@@ -870,6 +865,7 @@ define(function(require, exports, module) {
         fs.writeFile(filePath, content, 'utf8', function(error) {
           if (error) {
             reject(error);
+            return;
           }
           resolve(isNewFile);
         });
@@ -951,6 +947,7 @@ define(function(require, exports, module) {
         fs.unlink(path, function(error) {
           if (error) {
             reject(error);
+            return;
           } else {
             resolve(path);
           }
@@ -975,6 +972,7 @@ define(function(require, exports, module) {
         fs.rmdir(path, function(error) {
           if (error) {
             reject(error);
+            return;
           } else {
             resolve(path);
           }
