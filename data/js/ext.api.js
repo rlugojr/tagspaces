@@ -15,9 +15,8 @@ define(function(require, exports, module) {
         break;
       case "generatedText":
         if (TSCORE.PRO) {
-          console.log('GENERATE NEW TEXT FILE');
-          console.log(data);
-          TSCORE.PRO.saveTextContent(data.textFile.fileName, data.textFile.text);
+          var filePath = TSCORE.currentPath + TSCORE.dirSeparator + data.textFile.fileName;
+          TSCORE.PRO.saveTextContent(filePath, data.textFile.text);
         }
         break;
       case "saveDocument":
