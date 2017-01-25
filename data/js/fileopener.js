@@ -209,7 +209,7 @@ define(function(require, exports, module) {
     _openedFileProperties = fileProperties;
     $('#fileNameProperty').val(TSCORE.TagUtils.extractFileName(_openedFileProperties.path));
     $('#filePathProperty').val(TSCORE.TagUtils.extractContainingDirectoryPath(_openedFileProperties.path));
-    $('#fileSizeProperty').val(TSCORE.TagUtils.formatFileSize(_openedFileProperties.size, true) + " / " + _openedFileProperties.size + " " + $.i18n.t('ns.common:sizeInBytes'));
+    $('#fileSizeProperty').val(TSCORE.TagUtils.formatFileSize(_openedFileProperties.size) + " / " + _openedFileProperties.size + " " + $.i18n.t('ns.common:sizeInBytes'));
     $('#fileLMDTProperty').val(new Date(_openedFileProperties.lmdt).toISOString().substring(0, 19).split('T').join(' '));
     $('#fileLMDTProperty').attr("title", new Date(_openedFileProperties.lmdt));
 

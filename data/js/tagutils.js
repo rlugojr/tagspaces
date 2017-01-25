@@ -119,35 +119,26 @@ define(function(require, exports, module) {
     }
   }
 
-  function formatFileSize(sizeInBytes, siSystem) {
-    var threshold = siSystem ? 1000 : 1024;
-    if (!sizeInBytes) {
-      return "";
-    }
-    if (sizeInBytes < threshold) {
+  function formatFileSize(sizeInBytes) {
+    var kilobyte = 1024;
+    var megabyte = kilobyte * kilobyte;
+    var gigabyte = megabyte * kilobyte;
+    var terabyte = gigabyte * kilobyte;
+    var precision = 2;
+
+    if ((sizeInBytes >= 0) && (sizeInBytes < kilobyte)) {
+      return sizeInBytes + ' B';
+    } else if ((sizeInBytes >= kilobyte) && (sizeInBytes < megabyte)) {
+      return (sizeInBytes / kilobyte).toFixed(precision) + ' KB';
+    } else if ((sizeInBytes >= megabyte) && (sizeInBytes < gigabyte)) {
+      return (sizeInBytes / megabyte).toFixed(precision) + ' MB';
+    } else if ((sizeInBytes >= gigabyte) && (sizeInBytes < terabyte)) {
+      return (sizeInBytes / gigabyte).toFixed(precision) + ' GB';
+    } else if (sizeInBytes >= terabyte) {
+      return (sizeInBytes / terabyte).toFixed(precision) + ' TB';
+    } else {
       return sizeInBytes + ' B';
     }
-    var units = siSystem ? [
-      'kB',
-      'MB',
-      'GB',
-      'TB',
-      'PB',
-      'EB'
-    ] : [
-      'KiB',
-      'MiB',
-      'GiB',
-      'TiB',
-      'PiB',
-      'EiB'
-    ];
-    var cUnit = -1;
-    do {
-      sizeInBytes /= threshold;
-      ++cUnit;
-    } while (sizeInBytes >= threshold);
-    return sizeInBytes.toFixed(1) + ' ' + units[cUnit];
   }
 
   function formatDateTime(date, includeTime) {
