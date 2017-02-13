@@ -37,7 +37,7 @@ define(function (require, exports, module) {
         "enableMetaData":           false,
         "webDavPath"  :             "oc/remote.php/webdav",
         "ootbPerspectives":         ['perspectiveList', 'perspectiveGrid', 'perspectiveGraph', 'perspectiveImageSwiper'],
-        "ootbViewers":              [ "viewerBrowser", "viewerMD", "viewerImage", "viewerPDF", "editorText", "viewerText", "editorODF", "viewerURL", "viewerHTML", "viewerMHTML", "editorJSON", "viewerZIP", "viewerEPUB", "viewerAudioVideo" ],
+        "ootbViewers":              [ "viewerBrowser", "viewerMD", "viewerImage", "viewerPDF", "editorText", "viewerText", "editorODF", "viewerURL", "viewerHTML", "viewerMHTML", "editorJSON", "viewerZIP", "viewerEPUB", "viewerAudioVideo", "viewerRTF" ],
         "ootbEditors":              [ "editorHTML", "editorText", "editorODF", "editorJSON", "editorNext" ],
         "perspectives":             [{ 'id': 'perspectiveList', 'name': 'List' }, { 'id': 'perspectiveGrid', 'name': 'Grid' }, { 'id': 'perspectiveGraph', 'name': 'Graph' }, { 'id': 'perspectiveImageSwiper', 'name': 'ImageSwiper' }],
         "interfaceLanguage":        "en_US",
@@ -168,7 +168,7 @@ define(function (require, exports, module) {
             { "type": "desktop", "viewer": "viewerURL", "editor": "false" },
             { "type": "website", "viewer": "viewerURL", "editor": "false" },
             { "type": "url", "viewer": "viewerURL", "editor": "false" },
-            { "type": "zip", "viewer": "viewerZIP", "editor": "false" }
+            { "type": "zip", "viewer": "viewerZIP", "editor": "false" },
         ],
         "tagGroups": [
             {
